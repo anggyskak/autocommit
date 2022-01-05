@@ -1,1 +1,20 @@
 2022-01-05T10:19:25Z
+name: Auto commit
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 7,8,9,10,11 * * *'
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Modify LAST_UPDATED file
+        run: |
+          d=`date '+%Y-%m-%dT%H:%M:%SZ'`
+          echo $d > LAST_UPDATED
